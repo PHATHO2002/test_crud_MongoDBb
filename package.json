@@ -1,0 +1,30 @@
+{
+  "name": "test_crud",
+  "version": "1.0.0",
+  "description": "test crud with mongose",
+  "main": "sever.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon sever.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PHATHO2002/test_crud_MongoDB.git"
+  },
+  "keywords": [
+    "phatho123"
+  ],
+  "author": "phatho123",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PHATHO2002/test_crud_MongoDB/issues"
+  },
+  "homepage": "https://github.com/PHATHO2002/test_crud_MongoDB#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.6.1",
+    "nodemon": "^3.1.4",
+    "prettier": "^3.3.3",
+    "router": "^1.3.8"
+  }
+}
