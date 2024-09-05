@@ -5,7 +5,7 @@ async function connect() {
         await mongoose.connect('mongodb://localhost:27017/crud', {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            useCreateIndex: true,
+            serverSelectionTimeoutMS: 30000 // Tăng thời gian timeout
         });
         console.log('db was Connected!');
     } catch (error) {
