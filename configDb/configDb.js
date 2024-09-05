@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 async function connect() {
     try {
 
-        await mongoose.connect('mongodb://localhost:27017/crud', {
+        await mongoose.connect('crud-mongodb-shard-00-00.lbb0j.mongodb.net:27017', {
             seNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true
         });
         console.log('db was Connected!');
