@@ -3,9 +3,7 @@ async function connect() {
     try {
 
         await mongoose.connect('mongodb://localhost:27017/crud', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            serverSelectionTimeoutMS: 30000 // Tăng thời gian timeout
+            seNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true
         });
         console.log('db was Connected!');
     } catch (error) {
