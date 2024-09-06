@@ -2,7 +2,6 @@
 const express = require("express")
 const app = express()
 const db = require('./src/configDb/configDb.js');
-const SiteController = require('./src/controller/siteController.js')
 const router = require('./src/route/index.js');
 
 // connect to db
