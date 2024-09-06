@@ -72,20 +72,29 @@ class SiteController {
             const user = await userModel.findById(data.id);
             if (user) {
 
+                // giu lai thong tin cu neu ko co thong ti moi
+                const updatedUserData = {
+                    name: data.name ? data.name : user.name,
+                    age: data.age ? data.age : user.age,
+                    job: data.job ? data.job : user.job,
+                };
+
+
                 if (data.age && (typeof data.age !== 'number' || data.age <= 0)) {
                     return res.status(400).json({ error: 'age la mot so phai lon hon  0' });
                 }
 
                 if (data.name && (typeof data.name !== 'string' || data.name.trim().length === 0)) {
-                    return res.status(400).json({ error: 'job phai la mot chuoi khong duoc de trong' });
+                    return res.status(400).json({ error: 'name phai la mot chuoi khong duoc de trong' });
                 }
 
                 if (data.job && (typeof data.job !== 'string' || data.job.trim().length === 0)) {
                     return res.status(400).json({ error: 'job phai la mot chuoi khong duoc de trong' });
                 }
-                const oldUser = user;
-                const newUser = await userModel.findByIdAndUpdate(data.id, { name: data.name ? data.name : oldUser.name, age: data.age ? data.age : oldUser.age, job: data.job ? data.job : oldUser.job }, { new: true, runValidators: true })
-                return res.status(201).json({ mess: 'update thanh cong', newUser: newUser });
+
+
+                const newUser = await userModel.findByIdAndUpdate(data.id, updatedUserData, { new: true, runValidators: true });
+                return res.status(201).json({ mess: 'Update user thanh cong', newUser });
             }
             return res.status(400).json({ error: 'ko tim thay user' });
 
