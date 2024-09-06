@@ -19,7 +19,7 @@ class SiteController {
         try {
             const id = req.query.id;
             if (!id) {
-                return res.status(404).json({ error: 'thieu id' });
+                return res.status(400).json({ error: 'thieu id' });
             }
             const user = await userModel.findById(id);
 
@@ -27,7 +27,7 @@ class SiteController {
                 return res.status(200).json({ mess: 'tim user thanh cong', user: user });
             }
 
-            return res.status(404).json({ message: 'Không tìm thấy user' });
+            return res.status(400).json({ message: 'Không tìm thấy user' });
 
         } catch (error) {
             res.status(500).json({ error: `${error}` });
@@ -36,10 +36,22 @@ class SiteController {
     //post
     async createUser(req, res) {
         try {
-            const { name, age, job } = req.body;
+            const { age, name, job } = req.body;
 
-            if (!name || !age || !job) {
-                return res.status(404).json({ error: 'thieu Name hoac age hoac job ' });
+            if (!age || !name || !job) {
+                return res.status(400).json({ error: 'thieu Name hoac age hoac job ' });
+            }
+
+            if (typeof age !== 'number' || age <= 0) {
+                return res.status(400).json({ error: 'age la mot so phai lon hon  0' });
+            }
+
+            if (typeof name !== 'string' || name.trim().length === 0) {
+                return res.status(400).json({ error: 'name phai la mot chuoi khong duoc de trong' });
+            }
+
+            if (typeof job !== 'string' || job.trim().length === 0) {
+                return res.status(400).json({ error: 'job phai la mot chuoi khong duoc de trong' });
             }
             const user = await userModel.create({ name, age, job });
 
@@ -55,15 +67,27 @@ class SiteController {
 
             const data = req.body;
             if (!data.id) {
-                return res.status(404).json({ error: 'thieu id' });
+                return res.status(400).json({ error: 'thieu id' });
             }
             const user = await userModel.findById(data.id);
             if (user) {
+
+                if (data.age && (typeof data.age !== 'number' || data.age <= 0)) {
+                    return res.status(400).json({ error: 'age la mot so phai lon hon  0' });
+                }
+
+                if (data.name && (typeof data.name !== 'string' || data.name.trim().length === 0)) {
+                    return res.status(400).json({ error: 'job phai la mot chuoi khong duoc de trong' });
+                }
+
+                if (data.job && (typeof data.job !== 'string' || data.job.trim().length === 0)) {
+                    return res.status(400).json({ error: 'job phai la mot chuoi khong duoc de trong' });
+                }
                 const oldUser = user;
                 const newUser = await userModel.findByIdAndUpdate(data.id, { name: data.name ? data.name : oldUser.name, age: data.age ? data.age : oldUser.age, job: data.job ? data.job : oldUser.job }, { new: true, runValidators: true })
                 return res.status(201).json({ mess: 'update thanh cong', newUser: newUser });
             }
-            return res.status(404).json({ error: 'ko tim thay user' });
+            return res.status(400).json({ error: 'ko tim thay user' });
 
 
         } catch (error) {
@@ -76,14 +100,14 @@ class SiteController {
 
             const id = req.body.id;
             if (!id) {
-                return res.status(404).json({ error: 'thieu id' });
+                return res.status(400).json({ error: 'thieu id' });
             }
             const user = await userModel.findByIdAndDelete(id);
             if (user) {
 
                 return res.status(200).json({ mess: 'delete thanh cong', user: user });
             }
-            return res.status(404).json({ mess: 'ko tim user', user: user });
+            return res.status(400).json({ mess: 'ko tim user', user: user });
 
         } catch (error) {
             res.status(500).json({ error: `${error}` });
