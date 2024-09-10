@@ -9,7 +9,11 @@ class SiteController {
         try {
 
             const users = await userModel.find();
+<<<<<<< HEAD
             res.status(200).json({ mess: 'tim users thanh conggg', users: users });
+=======
+            res.status(200).json({ mess: 'tim users thanh congsss', users: users });
+>>>>>>> a417d6e8585766e9b5669e0692f5d5177ba339e0
 
         } catch (error) {
             res.status(500).json({ error: `${error}` });
